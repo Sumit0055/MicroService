@@ -16,7 +16,6 @@ export default function CreateComment({ snippet }) {
             console.log("Add comment error:", error)
         }
     }
-
     // useEffect(() => {
     //     const fetchComment = async () => {
     //         try {
@@ -29,9 +28,6 @@ export default function CreateComment({ snippet }) {
     //     }
     //     fetchComment()
     // }, [])
-
-
-
     return (
         <>
             <div className="">

@@ -1,0 +1,12 @@
+//----Docker Image build karne ke liye hai-----------
+# docker build -t sumitduttdev/comments .
+
+//---------Docker Container Run & Stop----------------
+# docker ps -a
+
+//------Show Docker Images-------
+
+# docker images
+
+//------------Docker Image Run-------------
+docker run sumitduttdev/comments

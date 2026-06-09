@@ -1,8 +1,9 @@
 import { commentsDB } from "../database/index.js";
 import { randomBytes } from "crypto"
+import axios from "axios";
 
-export const createComment = (req, res) => {
-    const commetID = randomBytes(4).toString('hex')
+export const createComment = async (req, res) => {
+    const commentID = randomBytes(4).toString('hex')
     
     const { text } = req.body;
     
@@ -11,11 +12,24 @@ export const createComment = (req, res) => {
     const comments = commentsDB[snippetId] || [];
 
     //-------------Creating a Comment---------
-    comments.push({ commetID, text });
+    comments.push({ commentID, text });
+    
     commentsDB[snippetId] = comments;
+    
+    // Best Placed to Public an Event
+    await axios.post("http://localhost:8005/events",{
+        type : "CommentCreated",
+        data : { 
+            id: commentID,
+            content : text,
+            snippetId
+        }
+    });
+
+
     res.status(201).json({
         success: true,
-        comment: { commetID, text },
+        comment: { commentID, text },
         message: "Comment Added Successfully"
     });
 }

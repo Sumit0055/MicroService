@@ -1,14 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-export default function CreateComment({ snippetId }) {
+export default function CreateComment({ snippet }) {
     const [text, setText] = useState("")
     const [comments, setComments] = useState([])
 
     const addComment = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(`http://localhost:8001/api/v1/snippet/${snippetId}/comment`, { text });
+            const res = await axios.post(`http://localhost:8001/api/v1/snippet/${snippet.id}/comment`, { text });
             // console.log("res Add Comment", res.data)
             setComments([...comments, res.data.comment])
             setText("")
@@ -17,24 +17,26 @@ export default function CreateComment({ snippetId }) {
         }
     }
 
-    useEffect(() => {
-        const fetchComment = async () => {
-            try {
-                const res = await axios.get(`http://localhost:8001/api/v1/snippet/${snippetId}/comment`);
-                // console.log("res fetch comment", res.data)
-                setComments(res.data.comments)
-            } catch (error) {
-                console.log("Fetch comment error:", error)
-            }
-        }
-        fetchComment()
-    }, [])
+    // useEffect(() => {
+    //     const fetchComment = async () => {
+    //         try {
+    //             const res = await axios.get(`http://localhost:8001/api/v1/snippet/${snippetId}/comment`);
+    //             // console.log("res fetch comment", res.data)
+    //             setComments(res.data.comments)
+    //         } catch (error) {
+    //             console.log("Fetch comment error:", error)
+    //         }
+    //     }
+    //     fetchComment()
+    // }, [])
+
+
 
     return (
         <>
             <div className="">
-                {comments?.map((comment, index) => (
-                    <li className="ms-6 text-sm mb-1" key={index}>{comment.text}</li>
+                {snippet.comments?.map((comment, index) => (
+                    <li className="ms-6 text-sm mb-1" key={index}>{comment.content}</li>
                 ))}
                 <form onSubmit={addComment}>
                     <input

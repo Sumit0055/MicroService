@@ -1,7 +1,7 @@
 import { snippets } from "../database/index.js";
 import { randomBytes } from "crypto"//-----orignal data base nahi hai ish liye yah crypto use kra hai ----------
-
-export const createSnippet = (req,res) =>{
+import axios from "axios";
+export const createSnippet =  async (req,res) =>{
     // console.log("Request Body : ", req.body)
     const id = randomBytes(4).toString('hex')
 
@@ -13,6 +13,13 @@ export const createSnippet = (req,res) =>{
         title ,
         code 
     }
+
+// Best Placed to Public an Event
+    await axios.post("http://localhost:8005/events",{
+        type : "SnippetCreated",
+        data : { id, title }
+    });
+
     return res.status(201).json({
         success: true,
         snippet:snippets[id],

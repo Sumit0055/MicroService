@@ -11,6 +11,10 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.post("/events",(req,res)=>{ 
+console.log(`Snippet Recived Event : ${req.body.type}`)
+})
+
 app.use("/api/v1/snippet",snippetRouter)//---------http://localhost:8000/api/v1/snippet-----------
 
 const PORT = 8000;
